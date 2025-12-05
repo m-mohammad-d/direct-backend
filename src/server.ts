@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { errorHandler } from "./middleware/errorHandler";
+import authRoutes from "./routes/auth";
 
 dotenv.config();
 
@@ -10,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => res.send("API is running..."));
+app.use("/api", authRoutes);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () =>
