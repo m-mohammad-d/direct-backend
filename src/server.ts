@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.route";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("API is running..."));
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 app.use(errorHandler);
 
