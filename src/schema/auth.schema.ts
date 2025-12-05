@@ -13,3 +13,10 @@ export const signupSchema = z.object({
 });
 
 export type SignupInput = z.infer<typeof signupSchema>;
+
+export const signinSchema = z.object({
+  email: z.string().email("ایمیل معتبر نیست"),
+  password: z.string().min(8, "پسورد باید حداقل 8 کاراکتر باشد"),
+});
+
+export type SigninInput = z.infer<typeof signinSchema>;

@@ -1,8 +1,9 @@
-import { SignupInput } from "../schema/auth";
-import { hashPassword } from "../utils/hash";
+import { SigninInput, SignupInput } from "../schema/auth.schema";
+import { comparePassword, hashPassword } from "../utils/hash";
 import { db } from "../db";
 import { HttpError } from "../utils/HttpError";
 
+// Signup already exists
 export async function registerUser(input: SignupInput) {
   const { email, password, username } = input;
 
@@ -33,4 +34,30 @@ export async function registerUser(input: SignupInput) {
   });
 
   return user;
+}
+
+export async function signinService(input: SigninInput) {
+  const { email, password } = input;
+
+  const user = await db.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    throw new HttpError(401, "Invalid email or password");
+  }
+
+  const isMatch = await comparePassword(password, user.password);
+  if (!isMatch) {
+    throw new HttpError(401, "Invalid email or password");
+  }
+
+  return {
+    user: {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      createdAt: user.createdAt,
+    },
+  };
 }

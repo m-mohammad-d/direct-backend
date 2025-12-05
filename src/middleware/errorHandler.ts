@@ -19,7 +19,7 @@ export function errorHandler(
   }
 
   res.status(status).json({
-    status: status,
+    status: "error",
     error: message,
   });
 }
