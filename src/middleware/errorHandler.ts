@@ -11,15 +11,13 @@ export function errorHandler(
   next: NextFunction
 ) {
   const status = err.status || 500;
-
   const message = err.message || "Internal Server Error";
 
   if (status === 500) {
-    console.error(err);
+    return res
+      .status(500)
+      .json({ status: "error", error: "Internal Server Error" });
   }
 
-  res.status(status).json({
-    status: "error",
-    error: message,
-  });
+  return res.status(status).json({ status: "error", error: message });
 }
