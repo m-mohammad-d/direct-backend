@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.route";
+import chatRoutes from "./routes/chat.routes";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("API is running..."));
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.use(errorHandler);
 
