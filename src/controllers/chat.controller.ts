@@ -30,3 +30,32 @@ export const getMyChats = async (req: Request, res: Response) => {
   const chats = await chatService.getUserChats(userId);
   return res.json({ status: "success", data: chats });
 };
+
+export const joinChat = async (req: Request, res: Response) => {
+  if (!req.user) throw new HttpError(401, "Unauthorized");
+
+  const { chatId } = req.params;
+  const userId = req.user.id;
+
+  const chat = await chatService.joinChat(chatId, userId);
+
+  return res.status(200).json({
+    status: "success",
+    message: "Joined chat successfully",
+    data: chat,
+  });
+};
+
+export const leaveChat = async (req: Request, res: Response) => {
+  if (!req.user) throw new HttpError(401, "Unauthorized");
+
+  const { chatId } = req.params;
+  const userId = req.user.id;
+
+  await chatService.leaveChat(chatId, userId);
+
+  return res.status(200).json({
+    status: "success",
+    message: "Left the group successfully",
+  });
+};
