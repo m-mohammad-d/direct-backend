@@ -55,10 +55,10 @@ export const getUserChats = async (userId: string) => {
   });
 };
 
-export const joinChat = async (chatId: string, userId: string) => {
+export const joinChat = async (inviteCode: string, userId: string) => {
   const existingChat = await db.chat.findFirst({
     where: {
-      id: chatId,
+      inviteCode,
       users: { some: { id: userId } },
     },
   });
@@ -68,7 +68,7 @@ export const joinChat = async (chatId: string, userId: string) => {
   }
 
   return db.chat.update({
-    where: { id: chatId },
+    where: { inviteCode },
     data: {
       users: {
         connect: { id: userId },

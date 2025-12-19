@@ -34,10 +34,10 @@ export const getMyChats = async (req: Request, res: Response) => {
 export const joinChat = async (req: Request, res: Response) => {
   if (!req.user) throw new HttpError(401, "Unauthorized");
 
-  const { chatId } = req.params;
+  const { inviteCode } = req.params;
   const userId = req.user.id;
 
-  const chat = await chatService.joinChat(chatId, userId);
+  const chat = await chatService.joinChat(inviteCode, userId);
 
   return res.status(200).json({
     status: "success",

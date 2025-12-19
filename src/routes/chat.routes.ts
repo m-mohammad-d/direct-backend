@@ -17,6 +17,6 @@ router.post(
 router.get("/", authMiddleware, getMyChats);
 router.post("/:chatId/messages", authMiddleware, sendMessage);
 router.get("/:chatId/messages", authMiddleware, getMessages);
-router.post("/:chatId/join", authMiddleware, joinChat);
+router.post("/:inviteCode/join", authMiddleware, joinChat);
 router.post("/:chatId/leave", authMiddleware, leaveChat);
 export default router;
