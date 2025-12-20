@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { HttpError } from "@/utils/HttpError";
 import { randomBytes } from "crypto";
 
-const inviteCode = randomBytes(6).toString("hex");
 export const createGroupChat = async (
   creatorId: string,
   userIds: string[] = [],
@@ -13,6 +12,7 @@ export const createGroupChat = async (
   if (!userIds.includes(creatorId)) {
     userIds.push(creatorId);
   }
+  const inviteCode = randomBytes(6).toString("hex");
 
   return db.chat.create({
     data: {
