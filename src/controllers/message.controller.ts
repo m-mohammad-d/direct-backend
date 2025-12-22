@@ -25,14 +25,14 @@ export const getMessages = async (req: Request, res: Response) => {
 
   const userId = req.user.id;
   const { chatId } = req.params;
-  const { page, limit } = req.query;
+  const { page = "1", limit = "20" } = req.query;
 
-  const messages = await messageService.getChatMessages(
+  const result = await messageService.getChatMessages(
     userId,
     chatId,
     Number(page),
     Number(limit)
   );
 
-  res.json(messages);
+  res.json(result);
 };
