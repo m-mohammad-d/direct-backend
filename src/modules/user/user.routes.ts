@@ -1,5 +1,5 @@
 
-import { getMeController } from "@/controllers/user.controller";
+import { getMeController } from "@/modules/user/user.controller";
 import { authMiddleware } from "@/middleware/authMiddleware";
 import express from "express";
 

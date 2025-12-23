@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { io } from "@/socket";
 import { HttpError } from "@/utils/HttpError";
-import * as messageService from "../services/message.service";
+import * as messageService from "./message.service";
 
 export const sendMessage = async (req: Request, res: Response) => {
   if (!req.user) throw new HttpError(401, "Unauthorized");

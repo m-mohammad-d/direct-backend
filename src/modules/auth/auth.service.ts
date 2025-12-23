@@ -1,7 +1,8 @@
-import { SigninInput, SignupInput } from "../schema/auth.schema";
-import { comparePassword, hashPassword } from "../utils/hash";
-import { db } from "../db";
-import { HttpError } from "../utils/HttpError";
+import { db } from "@/db";
+import { hashPassword, comparePassword } from "@/utils/hash";
+import { HttpError } from "@/utils/HttpError";
+import { SignupInput, SigninInput } from "./auth.schema";
+
 
 // Signup already exists
 export async function registerUser(input: SignupInput) {

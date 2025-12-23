@@ -1,13 +1,13 @@
 import express from "express";
 import { authMiddleware } from "@/middleware/authMiddleware";
 import { validateBody } from "@/middleware/validate";
-import { createGroupChatSchema } from "@/schema/chat.schema";
+import { createGroupChatSchema } from "@/modules/chat/chat.schema";
 import {
   createGroupChat,
   getMyChats,
   joinChat,
   leaveChat,
-} from "@/controllers/chat.controller";
+} from "./chat.controller";
 
 const router = express.Router();
 

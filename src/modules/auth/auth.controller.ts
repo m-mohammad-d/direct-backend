@@ -1,6 +1,7 @@
-import { registerUser, signinService } from "@/services/auth.service";
-import { generateToken } from "../utils/jwt";
+
+import { generateToken } from "@/utils/jwt";
 import { Request, Response, NextFunction } from "express";
+import { registerUser, signinService } from "./auth.service";
 
 export async function signupController(
   req: Request,

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as chatService from "../services/chat.service";
+import * as chatService from "./chat.service";
 import { HttpError } from "@/utils/HttpError";
 
 export const createGroupChat = async (req: Request, res: Response) => {

@@ -5,7 +5,7 @@ import {
   getMessages,
   updateMessage,
   deleteMessage,
-} from "@/controllers/message.controller";
+} from "@/modules/message/message.controller";
 
 const router = express.Router({ mergeParams: true });
 

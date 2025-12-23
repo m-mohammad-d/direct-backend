@@ -1,9 +1,9 @@
 import { validateBody } from "@/middleware/validate";
-import { signinSchema, signupSchema } from "@/schema/auth.schema";
+import { signinSchema, signupSchema } from "@/modules/auth/auth.schema";
 import {
   signinController,
   signupController,
-} from "../controllers/auth.controller";
+} from "./auth.controller";
 import express from "express";
 
 const router = express.Router();
