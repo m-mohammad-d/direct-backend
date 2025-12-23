@@ -4,9 +4,7 @@ import { HttpError } from "@/utils/HttpError";
 import * as messageService from "./message.service";
 
 export const sendMessage = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
-  const userId = req.user.id;
+  const userId = req.user!.id;
   const { chatId } = req.params;
   const { content } = req.body;
 
@@ -18,9 +16,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 };
 
 export const getMessages = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
-  const userId = req.user.id;
+  const userId = req.user!.id;
   const { chatId } = req.params;
   const { page = "1", limit = "20" } = req.query;
 
@@ -35,9 +31,7 @@ export const getMessages = async (req: Request, res: Response) => {
 };
 
 export const updateMessage = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
-  const userId = req.user.id;
+  const userId = req.user!.id;
   const { messageId } = req.params;
   const { content } = req.body;
 
@@ -53,9 +47,7 @@ export const updateMessage = async (req: Request, res: Response) => {
 };
 
 export const deleteMessage = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
-  const userId = req.user.id;
+  const userId = req.user!.id;
   const { messageId } = req.params;
 
   const deletedMessage = await messageService.deleteMessage(userId, messageId);

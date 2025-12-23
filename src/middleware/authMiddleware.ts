@@ -9,19 +9,6 @@ interface JwtPayload {
   exp: number;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        id: string;
-        username: string;
-        email: string;
-        createdAt: Date;
-      };
-    }
-  }
-}
-
 export async function authMiddleware(
   req: Request,
   res: Response,
@@ -46,6 +33,7 @@ export async function authMiddleware(
       username: true,
       email: true,
       createdAt: true,
+      avatar: true,
     },
   });
 

@@ -1,13 +1,8 @@
 import { Request, Response } from "express";
 import * as chatService from "./chat.service";
-import { HttpError } from "@/utils/HttpError";
 
 export const createGroupChat = async (req: Request, res: Response) => {
-  if (!req.user) {
-    throw new HttpError(401, "Unauthorized");
-  }
-
-  const creatorId = req.user.id;
+  const creatorId = req.user!.id;
   const { userIds, title, avatar, description } = req.body;
 
   const chat = await chatService.createGroupChat(
@@ -22,20 +17,14 @@ export const createGroupChat = async (req: Request, res: Response) => {
 };
 
 export const getMyChats = async (req: Request, res: Response) => {
-  if (!req.user) {
-    throw new HttpError(401, "Unauthorized");
-  }
-
-  const userId = req.user.id;
+  const userId = req.user!.id;
   const chats = await chatService.getUserChats(userId);
   return res.json({ status: "success", data: chats });
 };
 
 export const joinChat = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
   const { inviteCode } = req.params;
-  const userId = req.user.id;
+  const userId = req.user!.id;
 
   const chat = await chatService.joinChat(inviteCode, userId);
 
@@ -47,10 +36,8 @@ export const joinChat = async (req: Request, res: Response) => {
 };
 
 export const leaveChat = async (req: Request, res: Response) => {
-  if (!req.user) throw new HttpError(401, "Unauthorized");
-
   const { chatId } = req.params;
-  const userId = req.user.id;
+  const userId = req.user!.id;
 
   await chatService.leaveChat(chatId, userId);
 
