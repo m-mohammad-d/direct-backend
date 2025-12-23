@@ -10,3 +10,11 @@ export const updateUserSchema = z.object({
 });
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
+
+export const changePasswordSchema = z.object({
+  currentPassword: z
+    .string()
+    .min(8, "Current password must be at least 8 characters"),
+  newPassword: z.string().min(8, "New password must be at least 8 characters"),
+});
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;

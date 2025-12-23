@@ -1,7 +1,8 @@
 import { db } from "@/db";
-import { UpdateUserInput } from "./user.schema";
+import { ChangePasswordInput, UpdateUserInput } from "./user.schema";
 import { AuthUser } from "./user.types";
 import { HttpError } from "@/utils/HttpError";
+import { comparePassword, hashPassword } from "@/utils/hash";
 
 export const updateUser = async (
   userId: string,
@@ -29,4 +30,28 @@ export const updateUser = async (
   });
 
   return updatedUser;
+};
+
+export const changePassword = async (
+  userId: string,
+  input: ChangePasswordInput
+) => {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { password: true },
+  });
+
+  if (!user) throw new HttpError(404, "User not found");
+
+  const isMatch = await comparePassword(input.currentPassword, user.password!);
+  if (!isMatch) throw new HttpError(401, "Current password is incorrect");
+
+  const hashed = await hashPassword(input.newPassword);
+
+  await db.user.update({
+    where: { id: userId },
+    data: { password: hashed },
+  });
+
+  return { message: "Password changed successfully" };
 };
