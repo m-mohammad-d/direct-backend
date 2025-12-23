@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import { io } from "@/socket";
 import { HttpError } from "@/utils/HttpError";
 import * as messageService from "../services/message.service";
+
 export const sendMessage = async (req: Request, res: Response) => {
-  if (!req.user) {
-    throw new HttpError(401, "Unauthorized");
-  }
+  if (!req.user) throw new HttpError(401, "Unauthorized");
 
   const userId = req.user.id;
   const { chatId } = req.params;
@@ -19,9 +18,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 };
 
 export const getMessages = async (req: Request, res: Response) => {
-  if (!req.user) {
-    throw new HttpError(401, "Unauthorized");
-  }
+  if (!req.user) throw new HttpError(401, "Unauthorized");
 
   const userId = req.user.id;
   const { chatId } = req.params;
@@ -35,4 +32,37 @@ export const getMessages = async (req: Request, res: Response) => {
   );
 
   res.json(result);
+};
+
+export const updateMessage = async (req: Request, res: Response) => {
+  if (!req.user) throw new HttpError(401, "Unauthorized");
+
+  const userId = req.user.id;
+  const { messageId } = req.params;
+  const { content } = req.body;
+
+  const updatedMessage = await messageService.updateMessage(
+    userId,
+    messageId,
+    content
+  );
+
+  io.to(updatedMessage.chatId).emit("update-message", updatedMessage);
+
+  res.json(updatedMessage);
+};
+
+export const deleteMessage = async (req: Request, res: Response) => {
+  if (!req.user) throw new HttpError(401, "Unauthorized");
+
+  const userId = req.user.id;
+  const { messageId } = req.params;
+
+  const deletedMessage = await messageService.deleteMessage(userId, messageId);
+
+  io.to(deletedMessage.chatId).emit("delete-message", {
+    id: deletedMessage.id,
+  });
+
+  res.json({ message: "Message deleted", id: deletedMessage.id });
 };
