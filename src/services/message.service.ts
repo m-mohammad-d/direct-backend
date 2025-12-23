@@ -82,7 +82,7 @@ export const getChatMessages = async (
   });
 
   return {
-    messages,
+    data : messages,
     pagination: {
       totalCount,
       page,
