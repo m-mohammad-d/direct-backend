@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler";
+import uploadRoutes from "@/modules/upload/upload.routes";
 
 // Routes
 import authRoutes from "./modules/auth/auth.routes";
@@ -22,6 +23,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/chat/:chatId/messages", messageRoutes);
+app.use("/api/", uploadRoutes);
 
 // Error handler
 app.use(errorHandler);
