@@ -7,6 +7,10 @@ export const updateUserSchema = z.object({
     .max(30, "Username must be at most 30 characters")
     .optional(),
   avatar: z.string().url("Avatar must be a valid URL").optional(),
+  displayName: z.string().max(50).optional(),
+  bio: z.string().max(160).optional(),
+  showLastSeen: z.boolean().optional(),
+  showOnline: z.boolean().optional(),
 });
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;

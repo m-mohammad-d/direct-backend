@@ -14,12 +14,22 @@ datasource db {
 
 
 model User {
-  id        String    @id @default(uuid())
-  username  String    @unique
-  email     String    @unique
-  password  String
-  createdAt DateTime  @default(now())
+  id          String   @id @default(uuid())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
   avatar      String?  
+  
+  
+  displayName String?  
+  bio         String?  @db.VarChar(160) 
+  
+  isOnline    Boolean  @default(false)
+  lastSeen    DateTime @default(now())
+  
+  showLastSeen  Boolean @default(true)
+  showOnline    Boolean @default(true)
 
   chats     Chat[]    @relation("UserChats")
   messages  Message[]

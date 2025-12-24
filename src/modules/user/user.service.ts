@@ -8,6 +8,7 @@ export const updateUser = async (
   userId: string,
   data: UpdateUserInput
 ): Promise<AuthUser> => {
+  // Check if username exists
   if (data.username) {
     const existingUsername = await db.user.findUnique({
       where: { username: data.username },
@@ -25,13 +26,18 @@ export const updateUser = async (
       username: true,
       email: true,
       avatar: true,
+      displayName: true,
+      bio: true,
+      isOnline: true,
+      lastSeen: true,
+      showLastSeen: true,
+      showOnline: true,
       createdAt: true,
     },
   });
 
   return updatedUser;
 };
-
 export const changePassword = async (
   userId: string,
   input: ChangePasswordInput

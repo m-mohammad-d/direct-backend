@@ -32,8 +32,14 @@ export async function authMiddleware(
       id: true,
       username: true,
       email: true,
-      createdAt: true,
       avatar: true,
+      displayName: true,
+      bio: true,
+      isOnline: true,
+      lastSeen: true,
+      showLastSeen: true,
+      showOnline: true,
+      createdAt: true,
     },
   });
 
