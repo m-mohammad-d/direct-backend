@@ -3,6 +3,7 @@ import { ChangePasswordInput, UpdateUserInput } from "./user.schema";
 import { AuthUser } from "./user.types";
 import { HttpError } from "@/utils/HttpError";
 import { comparePassword, hashPassword } from "@/utils/hash";
+import { get } from "http";
 
 export const updateUser = async (
   userId: string,
@@ -60,4 +61,11 @@ export const changePassword = async (
   });
 
   return { message: "Password changed successfully" };
+};
+
+export const getUserById = async (userId: string): Promise<AuthUser | null> => {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+  });
+  return user;
 };

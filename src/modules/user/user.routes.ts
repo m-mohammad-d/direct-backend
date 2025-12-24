@@ -1,6 +1,7 @@
 import {
-    changePasswordController,
+  changePasswordController,
   getMeController,
+  getUserController,
   updateMeController,
 } from "@/modules/user/user.controller";
 import { authMiddleware } from "@/middleware/authMiddleware";
@@ -22,4 +23,6 @@ router.patch(
   validateBody(changePasswordSchema),
   changePasswordController
 );
+router.get("/:id", getUserController);
+
 export default router;
