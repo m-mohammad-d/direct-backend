@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import * as chatService from "./chat.service";
+import { getChatById } from "./chat.service";
+import { HttpError } from "@/utils/HttpError";
 
 export const createGroupChat = async (req: Request, res: Response) => {
   const creatorId = req.user!.id;
@@ -14,6 +16,24 @@ export const createGroupChat = async (req: Request, res: Response) => {
   );
 
   return res.status(201).json({ status: "success", data: chat });
+};
+export const getChatByIdController = async (
+  req: Request,
+  res: Response,
+) => {
+  const { id: chatId } = req.params;
+  const userId = req.user!.id; 
+
+  const chat = await getChatById(chatId, userId);
+
+  if (!chat) {
+    throw new HttpError(404, "Chat not found or access denied");
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: chat,
+  });
 };
 
 export const getMyChats = async (req: Request, res: Response) => {

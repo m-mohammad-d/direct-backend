@@ -4,6 +4,7 @@ import { validateBody } from "@/middleware/validate";
 import { createGroupChatSchema } from "@/modules/chat/chat.schema";
 import {
   createGroupChat,
+  getChatByIdController,
   getMyChats,
   joinChat,
   leaveChat,
@@ -17,7 +18,7 @@ router.post(
   validateBody(createGroupChatSchema),
   createGroupChat
 );
-
+router.get("/:id", authMiddleware, getChatByIdController);
 router.get("/", authMiddleware, getMyChats);
 router.post("/:inviteCode/join", authMiddleware, joinChat);
 router.post("/:chatId/leave", authMiddleware, leaveChat);

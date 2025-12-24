@@ -101,3 +101,28 @@ export const leaveChat = async (chatId: string, userId: string) => {
     },
   });
 };
+
+export const getChatById = async (chatId: string, userId: string) => {
+  const chat = await db.chat.findFirst({
+    where: {
+      id: chatId,
+      users: {
+        some: {
+          id: userId,
+        },
+      },
+    },
+    include: {
+      users: {
+        select: {
+          id: true,
+          username: true,
+          avatar: true,
+          displayName: true,
+        },
+      },
+    },
+  });
+
+  return chat;
+};
